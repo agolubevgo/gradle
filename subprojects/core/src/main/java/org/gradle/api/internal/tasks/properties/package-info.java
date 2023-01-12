@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 
-@NonNullApi
 package org.gradle.api.internal.tasks.properties;
 
-import org.gradle.api.NonNullApi;
+

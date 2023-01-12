@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 
-@NonNullApi
 package org.gradle.api.plugins.quality.internal;
 
-import org.gradle.api.NonNullApi;
+

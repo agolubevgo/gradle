@@ -17,7 +17,6 @@
 /**
  * Renderers responsible for generating configuration reports from gathered models.
  */
-@NonNullApi
 package org.gradle.api.tasks.diagnostics.internal.configurations.renderer;
 
-import org.gradle.api.NonNullApi;
+

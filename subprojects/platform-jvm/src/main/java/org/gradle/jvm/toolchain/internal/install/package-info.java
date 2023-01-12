@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 
-@NonNullApi
 package org.gradle.jvm.toolchain.internal.install;
 
-import org.gradle.api.NonNullApi;
+

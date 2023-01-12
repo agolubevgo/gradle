@@ -17,7 +17,6 @@
 /**
  * The archive bundling {@link org.gradle.api.Task} implementations.
  */
-@NonNullApi
 package org.gradle.api.tasks.bundling;
 
-import org.gradle.api.NonNullApi;
+

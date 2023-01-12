@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 
-@NonNullApi
 package org.gradle.api.reporting.dependencies.internal;
 
-import org.gradle.api.NonNullApi;
+

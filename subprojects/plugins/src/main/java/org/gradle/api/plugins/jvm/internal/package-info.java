@@ -19,7 +19,6 @@
  * integration of Java plugins. It provides the implementation of the
  * {@link org.gradle.api.plugins.jvm.internal.JvmEcosystemUtilities} service.
  */
-@NonNullApi
 package org.gradle.api.plugins.jvm.internal;
 
-import org.gradle.api.NonNullApi;
+

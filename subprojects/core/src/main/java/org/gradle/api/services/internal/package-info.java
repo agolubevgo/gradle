@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-@NonNullApi
 package org.gradle.api.services.internal;
 
-import org.gradle.api.NonNullApi;
+

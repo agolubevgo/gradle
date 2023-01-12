@@ -46,7 +46,7 @@ public class ArtifactBackedResolvedVariant implements ResolvedVariant {
     private final CapabilitiesMetadata capabilities;
     private final Supplier<ResolvedArtifactSet> artifacts;
 
-    private ArtifactBackedResolvedVariant(@Nullable VariantResolveMetadata.Identifier identifier, DisplayName displayName, AttributeContainerInternal attributes, CapabilitiesMetadata capabilities, Supplier<ResolvedArtifactSet> artifacts) {
+    public ArtifactBackedResolvedVariant(@Nullable VariantResolveMetadata.Identifier identifier, DisplayName displayName, AttributeContainerInternal attributes, CapabilitiesMetadata capabilities, Supplier<ResolvedArtifactSet> artifacts) {
         this.identifier = identifier;
         this.displayName = displayName;
         this.attributes = attributes;

@@ -21,7 +21,7 @@ import org.gradle.api.artifacts.Dependency;
 import java.util.Map;
 
 public class DefaultResolvedGraphResults implements ResolvedGraphResults {
-    private final Map<Long, Dependency> modulesMap;
+    final Map<Long, Dependency> modulesMap;
 
     public DefaultResolvedGraphResults(Map<Long, Dependency> modulesMap) {
         this.modulesMap = modulesMap;

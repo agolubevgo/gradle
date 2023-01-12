@@ -55,6 +55,21 @@ interface WriteContext : IsolateContext, MutableIsolateContext, Encoder {
     fun writeClass(type: Class<*>)
 }
 
+interface DependencyWriteContext : IsolateContext, MutableIsolateContext, Encoder {
+
+    val sharedIdentities: WriteIdentities
+
+    val circularReferences: CircularReferences
+
+    override val isolate: WriteIsolate
+
+    fun beanStateWriterFor(beanType: Class<*>): BeanStateWriter
+
+    suspend fun write(value: Any?)
+
+    fun writeClass(type: Class<*>)
+}
+
 
 interface Tracer {
 

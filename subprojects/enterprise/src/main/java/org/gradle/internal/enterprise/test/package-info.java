@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 
-@NonNullApi
 package org.gradle.internal.enterprise.test;
 
-import org.gradle.api.NonNullApi;
+

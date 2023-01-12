@@ -35,6 +35,7 @@ import org.gradle.api.internal.file.collections.DirectoryFileTreeFactory
 import org.gradle.api.internal.provider.PropertyFactory
 import org.gradle.api.internal.provider.ValueSourceProviderFactory
 import org.gradle.api.tasks.util.PatternSet
+import org.gradle.cache.internal.CrossBuildInMemoryCacheFactory
 import org.gradle.composite.internal.BuildTreeWorkGraphController
 import org.gradle.configurationcache.problems.DocumentationSection.NotYetImplementedJavaSerialization
 import org.gradle.configurationcache.serialization.Codec
@@ -84,7 +85,6 @@ import org.gradle.internal.state.ManagedFactoryRegistry
 import java.io.Externalizable
 
 
-internal
 class Codecs(
     directoryFileTreeFactory: DirectoryFileTreeFactory,
     fileCollectionFactory: FileCollectionFactory,
@@ -113,7 +113,8 @@ class Codecs(
     includedTaskGraph: BuildTreeWorkGraphController,
     buildStateRegistry: BuildStateRegistry,
     documentationRegistry: DocumentationRegistry,
-    javaSerializationEncodingLookup: JavaSerializationEncodingLookup
+    javaSerializationEncodingLookup: JavaSerializationEncodingLookup,
+    crossBuildInMemoryCacheFactory: CrossBuildInMemoryCacheFactory
 ) {
     private
     val userTypesBindings = Bindings.of {
@@ -165,6 +166,16 @@ class Codecs(
         bind(ResolveArtifactNodeCodec)
         bind(WorkNodeActionCodec)
         bind(CapabilitySerializer())
+
+        //TODO dependencies cache
+        bind(DefaultVisitedArtifactResultsCodec())
+        bind(FileDependencyArtifactSetCodec(calculatedValueContainerFactory,instantiator,attributesFactory))
+        bind(DefaultVisitedFileDependencyResultsCodec())
+        bind(DefaultArtifactSetCodec(instantiator, attributesFactory, fileCollectionFactory, calculatedValueContainerFactory, crossBuildInMemoryCacheFactory))
+        bind(DefaultSelfResolvingDependencyCodec())
+        bind(ComponentConfigurationIdentifierCodec())
+        bind(ArtifactBackedResolvedVariantCodec())
+        //TODO end
 
         bind(DefaultCopySpecCodec(patternSetFactory, fileCollectionFactory, instantiator))
         bind(DestinationRootCopySpecCodec(fileResolver))

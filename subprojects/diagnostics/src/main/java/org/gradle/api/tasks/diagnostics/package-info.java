@@ -17,8 +17,7 @@
 /**
  * The diagnostic {@link org.gradle.api.Task} implementations.
  */
-@NonNullApi
 package org.gradle.api.tasks.diagnostics;
 
 
-import org.gradle.api.NonNullApi;
+

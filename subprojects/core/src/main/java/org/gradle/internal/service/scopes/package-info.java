@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 
-@NonNullApi
 package org.gradle.internal.service.scopes;
 
-import org.gradle.api.NonNullApi;
+

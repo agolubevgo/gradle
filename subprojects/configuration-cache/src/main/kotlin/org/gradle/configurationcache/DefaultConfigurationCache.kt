@@ -523,10 +523,8 @@ class DefaultConfigurationCache internal constructor(
 }
 
 
-internal
 inline fun <reified T> DefaultConfigurationCache.Host.service(): T =
     service(T::class.java)
 
 
-internal
 val logger = Logging.getLogger(DefaultConfigurationCache::class.java)

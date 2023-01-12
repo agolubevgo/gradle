@@ -18,7 +18,6 @@
  * Specification classes which describe options used to run configuration reports
  * which will affect output.
  */
-@NonNullApi
 package org.gradle.api.tasks.diagnostics.internal.configurations.spec;
 
-import org.gradle.api.NonNullApi;
+

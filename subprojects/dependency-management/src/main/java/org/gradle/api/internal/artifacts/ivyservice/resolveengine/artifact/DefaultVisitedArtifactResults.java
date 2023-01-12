@@ -28,9 +28,9 @@ import java.util.List;
 import static org.gradle.api.internal.artifacts.ivyservice.resolveengine.artifact.ResolvedArtifactSet.EMPTY;
 
 public class DefaultVisitedArtifactResults implements VisitedArtifactsResults {
-    private final ResolutionStrategy.SortOrder sortOrder;
+    public final ResolutionStrategy.SortOrder sortOrder;
     // Index of the artifact set == the id of the artifact set
-    private final List<ArtifactSet> artifactsById;
+    public final List<ArtifactSet> artifactsById;
 
     public DefaultVisitedArtifactResults(ResolutionStrategy.SortOrder sortOrder, List<ArtifactSet> artifactsById) {
         this.sortOrder = sortOrder;

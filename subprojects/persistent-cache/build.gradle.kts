@@ -14,7 +14,7 @@ dependencies {
     implementation(project(":files"))
     implementation(project(":resources"))
     implementation(project(":logging"))
-
+    implementation(project(":build-cache-base"))
     implementation(libs.slf4jApi)
     implementation(libs.guava)
     implementation(libs.commonsIo)

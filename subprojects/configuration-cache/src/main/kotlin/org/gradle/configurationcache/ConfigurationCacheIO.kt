@@ -57,7 +57,6 @@ import java.io.OutputStream
 
 @ServiceScope(Scopes.Gradle::class)
 class ConfigurationCacheIO internal constructor(
-    private val startParameter: ConfigurationCacheStartParameter,
     private val host: DefaultConfigurationCache.Host,
     private val problems: ConfigurationCacheProblems,
     private val scopeRegistryListener: ConfigurationCacheClassLoaderScopeRegistryListener,
@@ -206,7 +205,6 @@ class ConfigurationCacheIO internal constructor(
         }
     }
 
-    internal
     fun writerContextFor(outputStream: OutputStream, profile: String): Pair<DefaultWriteContext, Codecs> =
         KryoBackedEncoder(outputStream).let { encoder ->
             writeContextFor(
@@ -214,6 +212,16 @@ class ConfigurationCacheIO internal constructor(
                 loggingTracerFor(profile, encoder),
                 codecs
             ) to codecs
+        }
+
+
+    fun writerContextForJava(outputStream: OutputStream, profile: String): org.gradle.internal.Pair<DefaultWriteContext, Codecs> =
+        KryoBackedEncoder(outputStream).let { encoder ->
+            org.gradle.internal.Pair.of(writeContextFor(
+                encoder,
+                loggingTracerFor(profile, encoder),
+                codecs
+            ),codecs)
         }
 
     private
@@ -224,7 +232,6 @@ class ConfigurationCacheIO internal constructor(
 
     private
     fun loggingTracerLogLevel(): LogLevel? = when {
-        startParameter.isDebug -> LogLevel.LIFECYCLE
         logger.isDebugEnabled -> LogLevel.DEBUG
         else -> null
     }
@@ -237,7 +244,6 @@ class ConfigurationCacheIO internal constructor(
             codecs
         ) to codecs
 
-    internal
     fun <R> withReadContextFor(
         inputStream: InputStream,
         readOperation: suspend DefaultReadContext.(Codecs) -> R
@@ -325,7 +331,8 @@ class ConfigurationCacheIO internal constructor(
             includedTaskGraph = service(),
             buildStateRegistry = service(),
             documentationRegistry = service(),
-            javaSerializationEncodingLookup = service()
+            javaSerializationEncodingLookup = service(),
+            crossBuildInMemoryCacheFactory = service()
         )
 
     private

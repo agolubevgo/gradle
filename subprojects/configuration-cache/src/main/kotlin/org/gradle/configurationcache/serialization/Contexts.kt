@@ -17,6 +17,7 @@
 package org.gradle.configurationcache.serialization
 
 import it.unimi.dsi.fastutil.objects.ReferenceArrayList
+import kotlinx.coroutines.GlobalScope
 import org.gradle.api.internal.initialization.ClassLoaderScope
 import org.gradle.api.internal.project.ProjectInternal
 import org.gradle.api.logging.LogLevel
@@ -35,26 +36,24 @@ import org.gradle.initialization.ClassLoaderScopeRegistry
 import org.gradle.internal.hash.HashCode
 import org.gradle.internal.serialize.Decoder
 import org.gradle.internal.serialize.Encoder
+import java.util.concurrent.CompletableFuture
+import kotlinx.coroutines.future.future
 
-
-internal
 class DefaultWriteContext(
     codec: Codec<Any?>,
 
     private
     val encoder: Encoder,
 
-    private
     val scopeLookup: ScopeLookup,
 
-    private
     val beanStateWriterLookup: BeanStateWriterLookup,
 
     override val logger: Logger,
 
     override val tracer: Tracer?,
 
-    problemsListener: ProblemsListener
+    problemsListener: ProblemsListener?
 
 ) : AbstractIsolateContext<WriteIsolate>(codec, problemsListener), WriteContext, Encoder by encoder, AutoCloseable {
 
@@ -86,6 +85,14 @@ class DefaultWriteContext(
             encode(value)
         }
     }
+   //
+    fun writeAync(value: Any?): CompletableFuture<Unit> =
+         GlobalScope.future {
+            getCodec().run {
+                encode(value)
+            }
+        }
+
 
     override fun writeClass(type: Class<*>) {
         val id = classes.getId(type)
@@ -153,7 +160,6 @@ class DefaultWriteContext(
 }
 
 
-internal
 class LoggingTracer(
     private val profile: String,
     private val writePosition: () -> Long,
@@ -192,18 +198,19 @@ interface EncodingProvider<T> {
     suspend fun WriteContext.encode(value: T)
 }
 
+interface DependencyEncodingProvider<T> {
+    suspend fun DependencyWriteContext.encode(value: T)
+}
 
 @JvmInline
 value class ClassLoaderRole(val local: Boolean)
 
 
-internal
 interface ScopeLookup {
     fun scopeFor(classLoader: ClassLoader?): Pair<ClassLoaderScopeSpec, ClassLoaderRole>?
 }
 
 
-internal
 class DefaultReadContext(
     codec: Codec<Any?>,
 
@@ -215,7 +222,7 @@ class DefaultReadContext(
 
     override val logger: Logger,
 
-    problemsListener: ProblemsListener
+    problemsListener: ProblemsListener?
 
 ) : AbstractIsolateContext<ReadIsolate>(codec, problemsListener), ReadContext, Decoder by decoder, AutoCloseable {
 
@@ -353,14 +360,13 @@ internal
 typealias ProjectProvider = (String) -> ProjectInternal
 
 
-internal
 abstract class AbstractIsolateContext<T>(
     codec: Codec<Any?>,
-    problemsListener: ProblemsListener
+    problemsListener: ProblemsListener?
 ) : MutableIsolateContext {
 
     private
-    var currentProblemsListener: ProblemsListener = problemsListener
+    var currentProblemsListener: ProblemsListener? = problemsListener
 
     private
     var currentIsolate: T? = null
@@ -405,16 +411,18 @@ abstract class AbstractIsolateContext<T>(
     }
 
     override fun onProblem(problem: PropertyProblem) {
-        currentProblemsListener.onProblem(problem)
+        if(currentProblemsListener!=null) currentProblemsListener!!.onProblem(problem)
     }
 
     override fun onError(error: Exception, message: StructuredMessageBuilder) {
-        currentProblemsListener.onError(trace, error, message)
+        if(currentProblemsListener!=null)
+        currentProblemsListener!!.onError(trace, error, message)
     }
 
     override suspend fun forIncompatibleType(action: suspend () -> Unit) {
         val previousListener = currentProblemsListener
-        currentProblemsListener = previousListener.forIncompatibleType()
+        if(currentProblemsListener!=null)
+        currentProblemsListener = previousListener!!.forIncompatibleType()
         try {
             action()
         } finally {

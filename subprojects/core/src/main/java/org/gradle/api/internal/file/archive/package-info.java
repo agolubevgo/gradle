@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 
-@NonNullApi
 package org.gradle.api.internal.file.archive;
 
-import org.gradle.api.NonNullApi;
+

@@ -17,7 +17,6 @@
 /**
  * Test fixtures for Gradle plugin testing.
  */
-@NonNullApi
 package org.gradle.testfixtures;
 
-import org.gradle.api.NonNullApi;
+

@@ -26,7 +26,6 @@ import java.util.concurrent.ConcurrentHashMap
 
 
 @ServiceScope(Scopes.BuildTree::class)
-internal
 class JavaSerializationEncodingLookup {
     private
     val encodings = ConcurrentHashMap<Class<*>, EncodingDetails>()

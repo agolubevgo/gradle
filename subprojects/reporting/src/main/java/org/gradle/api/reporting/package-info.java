@@ -17,7 +17,6 @@
 /**
  * Classes for reporting
  */
-@NonNullApi
 package org.gradle.api.reporting;
 
-import org.gradle.api.NonNullApi;
+

@@ -30,6 +30,7 @@ import java.io.Closeable;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class ResolutionResultsStoreFactory implements Closeable {
@@ -60,15 +61,16 @@ public class ResolutionResultsStoreFactory implements Closeable {
     private final Map<String, DefaultBinaryStore> stores = new HashMap<>();
     private final CompositeStoppable cleanUpLater = new CompositeStoppable();
 
-    private synchronized DefaultBinaryStore createBinaryStore(String storeKey) {
+    private synchronized DefaultBinaryStore createBinaryStore(String storeKey, File file) {
         DefaultBinaryStore store = stores.get(storeKey);
-        if (store == null || isFull(store)) {
-            File storeFile = temp.createTemporaryFile("gradle", ".bin");
+        if (store == null || isFull(store) || file == null) {
+            File storeFile = (file!=null) ? file : temp.createTemporaryFile("gradle", ".bin");
             storeFile.deleteOnExit();
             store = new DefaultBinaryStore(storeFile);
             stores.put(storeKey, store);
             cleanUpLater.add(store);
         }
+
         return store;
     }
 
@@ -92,13 +94,20 @@ public class ResolutionResultsStoreFactory implements Closeable {
         return new StoreSet() {
             final int storeSetId = storeSetBaseId.getAndIncrement();
             int binaryStoreId;
-            @Override
-            public DefaultBinaryStore nextBinaryStore() {
-                //one binary store per id+threadId
-                String storeKey = Thread.currentThread().getId() + "-" + binaryStoreId++;
-                return createBinaryStore(storeKey);
-            }
 
+            @Override
+            public DefaultBinaryStore nextBinaryStore(Optional<String> hash) {
+                //one binary store per id+threadId
+                String storeKey = //Thread.currentThread().getId() + "-" + binaryStoreId++;
+                    hash.orElse(String.valueOf(Thread.currentThread().getId())) + "-" + binaryStoreId++;
+                return createBinaryStore(storeKey,null);
+            }
+            @Override
+            public DefaultBinaryStore nextBinaryStore(Optional<String> hash, File file){
+                String storeKey = //Thread.currentThread().getId() + "-" + binaryStoreId++;
+                    hash.orElse(String.valueOf(Thread.currentThread().getId())) + "-" + binaryStoreId++;
+                return createBinaryStore(storeKey, file);
+            }
             @Override
             public Store<ResolvedComponentResult> newModelCache() {
                 return getNewModelCache().createCachedStore(storeSetId);

@@ -114,7 +114,7 @@ fun BindingsBuilder.unsupportedTypes() {
     bind(unsupported<DisambiguationRuleChain<*>>())
     bind(unsupported<ArtifactResolutionQuery>())
     bind(unsupported<DependencySet>())
-    bind(unsupported<Dependency>())
+    //bind(unsupported<Dependency>())
     bind(unsupported<DependencyLockingHandler>())
     bind(unsupported<ResolvedDependency>())
     bind(unsupported<ResolvedArtifact>())

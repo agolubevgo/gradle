@@ -20,6 +20,9 @@ import org.gradle.configurationcache.fingerprint.ConfigurationCacheFingerprintCo
 import org.gradle.configurationcache.initialization.DefaultConfigurationCacheProblemsListener
 import org.gradle.configurationcache.problems.ConfigurationCacheReport
 import org.gradle.configurationcache.serialization.beans.BeanConstructors
+import org.gradle.configurationcache.serialization.beans.BeanStateReaderLookup
+import org.gradle.configurationcache.serialization.beans.BeanStateWriterLookup
+import org.gradle.configurationcache.serialization.codecs.jos.JavaSerializationEncodingLookup
 import org.gradle.internal.service.ServiceRegistration
 import org.gradle.internal.service.scopes.AbstractPluginServiceRegistry
 
@@ -60,7 +63,13 @@ class ConfigurationCacheServices : AbstractPluginServiceRegistry() {
     override fun registerGradleServices(registration: ServiceRegistration) {
         registration.run {
             add(ConfigurationCacheHost::class.java)
+            add(ConfigurationCacheClassLoaderScopeRegistryListener::class.java)
+            add(BeanStateWriterLookup::class.java)
+            add(JavaSerializationEncodingLookup::class.java)
+            add(BeanStateReaderLookup::class.java)
             add(ConfigurationCacheIO::class.java)
+            add(DependencyCacheIO::class.java)
+            add(DefaultUniversalSerializator::class.java)
         }
     }
 }

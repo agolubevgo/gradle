@@ -105,8 +105,8 @@ class LocalFileDependencyBackedArtifactSetCodec(
             // Do not write this if it will not be used
             // TODO - simplify extracting the mappings
             // TODO - deduplicate this data, as the mapping is project scoped and almost always the same across all projects of a given type
-            val matchingOnArtifactFormat = value.selector.requestedAttributes.keySet().contains(ARTIFACT_TYPE_ATTRIBUTE)
-            writeBoolean(matchingOnArtifactFormat)
+            val artifactType = value.selector.requestedAttributes.getAttribute(ARTIFACT_TYPE_ATTRIBUTE)
+            writeBoolean(artifactType != null)
             val mappings = mutableMapOf<ImmutableAttributes, MappingSpec>()
             value.artifactTypeRegistry.visitArtifactTypes { sourceAttributes ->
                 val recordingSet = RecordingVariantSet(value.dependencyMetadata.files, sourceAttributes)
@@ -118,6 +118,10 @@ class LocalFileDependencyBackedArtifactSetCodec(
                 } else {
                     mappings[sourceAttributes] = IdentityMapping
                 }
+            }
+            if (artifactType != null) {
+                val requestedArtifactType = attributesFactory.of(ARTIFACT_TYPE_ATTRIBUTE, artifactType)
+                mappings[requestedArtifactType] = IdentityMapping
             }
             write(mappings)
         }
@@ -157,7 +161,6 @@ class LocalFileDependencyBackedArtifactSetCodec(
 }
 
 
-private
 class RecordingVariantSet(
     private val source: FileCollectionInternal,
     private val attributes: ImmutableAttributes
@@ -230,11 +233,9 @@ class RecordingVariantSet(
 }
 
 
-private
 sealed class MappingSpec
 
 
-private
 class TransformMapping(private val targetAttributes: ImmutableAttributes, private val transformation: Transformation) : MappingSpec(), VariantDefinition {
     override fun getTargetAttributes(): ImmutableAttributes {
         return targetAttributes
@@ -254,7 +255,6 @@ class TransformMapping(private val targetAttributes: ImmutableAttributes, privat
 }
 
 
-private
 object IdentityMapping : MappingSpec()
 
 
@@ -279,6 +279,7 @@ class FixedVariantSelector(
                     variant.artifacts
                 }
             }
+
             is IdentityMapping -> variant.artifacts
             is TransformMapping -> factory.asTransformed(variant, spec, EmptyDependenciesResolverFactory(fileCollectionFactory), transformedVariantFactory)
         }
@@ -365,7 +366,6 @@ object NoOpTransformedVariantFactory : TransformedVariantFactory {
 }
 
 
-private
 object EmptyVariantTransformRegistry : VariantTransformRegistry {
     override fun <T : TransformParameters?> registerTransform(actionType: Class<out TransformAction<T>>, registrationAction: Action<in org.gradle.api.artifacts.transform.TransformSpec<T>>) {
         throw UnsupportedOperationException("Should not be called")

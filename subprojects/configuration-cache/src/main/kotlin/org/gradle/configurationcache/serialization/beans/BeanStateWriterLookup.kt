@@ -22,7 +22,6 @@ import java.util.concurrent.ConcurrentHashMap
 
 
 @ServiceScope(Scopes.BuildTree::class)
-internal
 class BeanStateWriterLookup {
     private
     val beanPropertyWriters = ConcurrentHashMap<Class<*>, BeanStateWriter>()

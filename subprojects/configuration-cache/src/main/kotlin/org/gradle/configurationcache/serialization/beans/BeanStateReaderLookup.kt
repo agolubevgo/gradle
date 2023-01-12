@@ -23,7 +23,6 @@ import java.util.concurrent.ConcurrentHashMap
 
 
 @ServiceScope(Scopes.BuildTree::class)
-internal
 class BeanStateReaderLookup(
     private val constructors: BeanConstructors,
     private val instantiatorFactory: InstantiatorFactory

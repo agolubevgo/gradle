@@ -86,6 +86,7 @@ dependencies {
     implementation(libs.groovyJson)
     implementation(libs.slf4jApi)
     implementation(libs.guava)
+    implementation(libs.javaCoroutines)
 
     implementation(libs.futureKotlin("stdlib-jdk8"))
     implementation(libs.futureKotlin("reflect"))

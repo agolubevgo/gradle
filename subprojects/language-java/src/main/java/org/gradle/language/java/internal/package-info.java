@@ -17,7 +17,6 @@
 /**
  * Types for Java language support.
  */
-@NonNullApi
 package org.gradle.language.java.internal;
 
-import org.gradle.api.NonNullApi;
+

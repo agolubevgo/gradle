@@ -15,12 +15,19 @@
  */
 package org.gradle.api.internal.artifacts.ivyservice.resolveengine.store;
 
+import org.gradle.api.internal.artifacts.repositories.metadata.DefaultMetadataFileSource;
 import org.gradle.cache.internal.BinaryStore;
+import org.gradle.caching.internal.CacheableEntity;
 import org.gradle.internal.concurrent.CompositeStoppable;
+import org.gradle.internal.file.FileMetadata;
+import org.gradle.internal.file.TreeType;
+import org.gradle.internal.file.impl.DefaultFileMetadata;
+import org.gradle.internal.hash.HashCode;
 import org.gradle.internal.io.RandomAccessFileInputStream;
 import org.gradle.internal.serialize.Decoder;
 import org.gradle.internal.serialize.kryo.StringDeduplicatingKryoBackedDecoder;
 import org.gradle.internal.serialize.kryo.StringDeduplicatingKryoBackedEncoder;
+import org.gradle.internal.snapshot.RegularFileSnapshot;
 
 import java.io.Closeable;
 import java.io.File;
@@ -30,13 +37,16 @@ import java.io.RandomAccessFile;
 
 import static org.gradle.internal.UncheckedException.throwAsUncheckedException;
 
-class DefaultBinaryStore implements BinaryStore, Closeable {
+public class DefaultBinaryStore implements BinaryStore, Closeable, CacheableEntity {
     private File file;
     private StringDeduplicatingKryoBackedEncoder encoder;
     private long offset = -1;
 
     public DefaultBinaryStore(File file) {
         this.file = file;
+    }
+    public void loadedFromCache(){
+        offset = 0;
     }
 
     @Override
@@ -98,7 +108,7 @@ class DefaultBinaryStore implements BinaryStore, Closeable {
         }
     }
 
-    File getFile() {
+    public File getFile() {
         return file;
     }
 
@@ -150,5 +160,22 @@ class DefaultBinaryStore implements BinaryStore, Closeable {
         public String toString() {
             return "Binary store in " + inputFile + " offset " + offset + " exists? " + inputFile.exists();
         }
+    }
+
+    //public File getFile(){return file;}
+
+    public String getIdentity(){return file.getName();}
+
+    public Class<?> getType() { return this.getType();}
+
+    public String getDisplayName() {return file.getName();}
+
+    public void visitOutputTrees(CacheableEntity.CacheableTreeVisitor visitor) {
+        visitor.visitOutputTree("main", TreeType.FILE, file);
+    }
+
+    public RegularFileSnapshot makeSnapshot(HashCode code){
+        FileMetadata metadata = DefaultFileMetadata.file(file.lastModified(), file.length(), FileMetadata.AccessType.DIRECT);
+        return new RegularFileSnapshot(file.getAbsolutePath(),file.getName(), code,metadata);
     }
 }

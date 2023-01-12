@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-@NonNullApi
 package org.gradle.caching.internal.controller.impl;
 
-import org.gradle.api.NonNullApi;
+

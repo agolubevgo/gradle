@@ -35,13 +35,13 @@ import java.util.Set;
  * Contains zero or more variants of a particular component.
  */
 public class DefaultArtifactSet implements ArtifactSet, ResolvedVariantSet, VariantSelector.Factory {
-    private final ComponentIdentifier componentIdentifier;
+    public final ComponentIdentifier componentIdentifier;
     private final AttributesSchemaInternal schema;
     private final ImmutableAttributes selectionAttributes;
     private final ComponentArtifactResolveVariantState componentArtifactResolveVariantState;
     private final Set<ResolvedVariant> legacyVariants;
 
-    DefaultArtifactSet(ComponentIdentifier componentIdentifier, AttributesSchemaInternal schema, ImmutableAttributes selectionAttributes, ComponentArtifactResolveVariantState componentArtifactResolveVariantState, Set<ResolvedVariant> legacyVariants) {
+    public DefaultArtifactSet(ComponentIdentifier componentIdentifier, AttributesSchemaInternal schema, ImmutableAttributes selectionAttributes, ComponentArtifactResolveVariantState componentArtifactResolveVariantState, Set<ResolvedVariant> legacyVariants) {
         this.componentIdentifier = componentIdentifier;
         this.schema = schema;
         this.selectionAttributes = selectionAttributes;

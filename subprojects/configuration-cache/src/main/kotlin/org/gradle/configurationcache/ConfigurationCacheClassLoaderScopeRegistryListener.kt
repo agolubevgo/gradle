@@ -33,7 +33,6 @@ import java.io.Closeable
 
 
 @ServiceScope(Scopes.BuildTree::class)
-internal
 class ConfigurationCacheClassLoaderScopeRegistryListener(
     private
     val listenerManager: ClassLoaderScopeRegistryListenerManager
@@ -121,7 +120,6 @@ class ConfigurationCacheClassLoaderScopeRegistryListener(
 }
 
 
-internal
 class ClassLoaderScopeSpec(
     val parent: ClassLoaderScopeSpec?,
     val name: String,

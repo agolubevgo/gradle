@@ -17,7 +17,6 @@
 /**
  * Classes used for implementing units of work.
  */
-@NonNullApi
 package org.gradle.work;
 
-import org.gradle.api.NonNullApi;
+

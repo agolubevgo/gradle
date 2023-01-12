@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 
-@NonNullApi
 package org.gradle.language.base.internal.model;
 
-import org.gradle.api.NonNullApi;
+

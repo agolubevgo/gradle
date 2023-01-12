@@ -1,5 +1,7 @@
 plugins {
-    id("gradlebuild.distribution.implementation-java")
+    //id("gradlebuild.distribution.implementation-java")
+    id("gradlebuild.distribution.implementation-kotlin")
+    id("gradlebuild.kotlin-dsl-sam-with-receiver")
 }
 
 description = """This project contains most of the dependency management logic of Gradle:
@@ -8,6 +10,21 @@ description = """This project contains most of the dependency management logic o
     |* the dependency locking and verification implementations.
     |
     |DSL facing APIs are to be found in 'core-api'""".trimMargin()
+
+//kotlin.getSourceSets().all {
+//    languageSettings.setProgressiveMode(true)
+//}
+
+tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
+    kotlinOptions.apply {
+        apiVersion = "1.5"
+        languageVersion = "1.5"
+        freeCompilerArgs += listOf(
+            "-opt-in=kotlin.contracts.ExperimentalContracts",
+            "-Xsam-conversions=class",
+        )
+    }
+}
 
 dependencies {
     implementation(project(":base-services"))
@@ -46,6 +63,8 @@ dependencies {
     implementation(libs.ant)
     implementation(libs.ivy)
     implementation(libs.maven3SettingsBuilder)
+    implementation(libs.kryo)
+
 
     testImplementation(project(":process-services"))
     testImplementation(project(":diagnostics"))

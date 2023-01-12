@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 
-@NonNullApi
 package org.gradle.api.internal.artifacts.query;
 
-import org.gradle.api.NonNullApi;
+

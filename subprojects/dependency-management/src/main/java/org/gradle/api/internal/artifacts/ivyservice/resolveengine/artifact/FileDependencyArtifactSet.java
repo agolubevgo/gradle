@@ -24,9 +24,9 @@ import org.gradle.internal.component.local.model.LocalFileDependencyMetadata;
 import org.gradle.internal.model.CalculatedValueContainerFactory;
 
 public class FileDependencyArtifactSet implements ArtifactSet {
-    private final LocalFileDependencyMetadata fileDependency;
-    private final ArtifactTypeRegistry artifactTypeRegistry;
-    private final CalculatedValueContainerFactory calculatedValueContainerFactory;
+    public final LocalFileDependencyMetadata fileDependency;
+    public final ArtifactTypeRegistry artifactTypeRegistry;
+    final CalculatedValueContainerFactory calculatedValueContainerFactory;
 
     public FileDependencyArtifactSet(LocalFileDependencyMetadata fileDependency, ArtifactTypeRegistry artifactTypeRegistry, CalculatedValueContainerFactory calculatedValueContainerFactory) {
         this.fileDependency = fileDependency;

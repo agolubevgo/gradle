@@ -17,7 +17,6 @@
 /**
  * Continuous build execution and triggering.
  */
-@NonNullApi
 package org.gradle.tooling.internal.provider.continuous;
 
-import org.gradle.api.NonNullApi;
+

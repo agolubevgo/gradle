@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 
-@NonNullApi
 package org.gradle.api.internal.catalog;
 
-import org.gradle.api.NonNullApi;
+

@@ -14,7 +14,5 @@
  * limitations under the License.
  */
 
-@NonNullApi
 package org.gradle.api.internal.artifacts;
 
-import org.gradle.api.NonNullApi;

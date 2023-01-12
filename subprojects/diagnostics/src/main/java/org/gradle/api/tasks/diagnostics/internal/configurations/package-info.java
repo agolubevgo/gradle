@@ -17,7 +17,6 @@
 /**
  * Internal classes used by tasks which report information about configurations.
  */
-@NonNullApi
 package org.gradle.api.tasks.diagnostics.internal.configurations;
 
-import org.gradle.api.NonNullApi;
+

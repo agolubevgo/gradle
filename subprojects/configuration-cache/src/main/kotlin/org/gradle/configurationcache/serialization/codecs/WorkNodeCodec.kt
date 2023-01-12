@@ -40,7 +40,6 @@ import org.gradle.execution.plan.OrdinalGroupFactory
 import org.gradle.execution.plan.TaskNode
 
 
-internal
 class WorkNodeCodec(
     private val owner: GradleInternal,
     private val internalTypesCodec: Codec<Any?>,

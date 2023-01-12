@@ -20,8 +20,12 @@ import org.gradle.api.internal.artifacts.ivyservice.resolveengine.oldresult.Tran
 import org.gradle.cache.internal.BinaryStore;
 import org.gradle.cache.internal.Store;
 
+import java.io.File;
+import java.util.Optional;
+
 public interface StoreSet {
-    BinaryStore nextBinaryStore();
+    DefaultBinaryStore nextBinaryStore(Optional<String> hash);
+    DefaultBinaryStore nextBinaryStore(Optional<String> hash, File file);
 
     Store<ResolvedComponentResult> newModelCache();
 

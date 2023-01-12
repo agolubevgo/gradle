@@ -17,8 +17,7 @@
 /**
  * Classes related to JVM dependencies and components
  */
-@NonNullApi
 package org.gradle.api.plugins.jvm;
 
-import org.gradle.api.NonNullApi;
+
 

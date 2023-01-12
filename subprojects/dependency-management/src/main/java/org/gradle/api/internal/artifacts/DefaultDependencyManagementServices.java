@@ -109,6 +109,7 @@ import org.gradle.api.internal.tasks.TaskDependencyFactory;
 import org.gradle.api.internal.tasks.TaskResolver;
 import org.gradle.api.model.ObjectFactory;
 import org.gradle.api.provider.ProviderFactory;
+import org.gradle.caching.internal.controller.BuildCacheController;
 import org.gradle.configuration.internal.UserCodeApplicationContext;
 import org.gradle.initialization.internal.InternalBuildFinishedListener;
 import org.gradle.internal.authentication.AuthenticationSchemeRegistry;
@@ -509,6 +510,7 @@ public class DefaultDependencyManagementServices implements DependencyManagement
             return new DefaultGlobalDependencyResolutionRules(componentMetadataProcessorFactory, moduleMetadataProcessor, rules);
         }
 
+
         ConfigurationResolver createDependencyResolver(ArtifactDependencyResolver artifactDependencyResolver,
                                                        RepositoriesSupplier repositoriesSupplier,
                                                        GlobalDependencyResolutionRules metadataHandler,
@@ -528,7 +530,9 @@ public class DefaultDependencyManagementServices implements DependencyManagement
                                                        DependencyVerificationOverride dependencyVerificationOverride,
                                                        ProjectDependencyResolver projectDependencyResolver,
                                                        ComponentSelectionDescriptorFactory componentSelectionDescriptorFactory,
-                                                       WorkerLeaseService workerLeaseService) {
+                                                       WorkerLeaseService workerLeaseService,
+                                                       GradleInternal gradle) {
+            boolean syncMode = startParameter.getProjectProperties().containsKey("android.injected.invoked.from.ide");
             return new ErrorHandlingConfigurationResolver(
                     new ShortCircuitEmptyConfigurationResolver(
                             new DefaultConfigurationResolver(
@@ -557,7 +561,10 @@ public class DefaultDependencyManagementServices implements DependencyManagement
                                     dependencyVerificationOverride,
                                     projectDependencyResolver,
                                     componentSelectionDescriptorFactory,
-                                    workerLeaseService),
+                                    workerLeaseService,
+                                gradle.getServices(),
+                                syncMode
+                                ),
                             componentIdentifierFactory,
                             moduleIdentifierFactory,
                             currentBuild.getBuildIdentifier()));

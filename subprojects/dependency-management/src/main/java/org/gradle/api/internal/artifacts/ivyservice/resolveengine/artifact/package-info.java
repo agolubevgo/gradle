@@ -13,7 +13,4 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-@NonNullApi
 package org.gradle.api.internal.artifacts.ivyservice.resolveengine.artifact;
-
-import org.gradle.api.NonNullApi;

@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 
-@NonNullApi
 package org.gradle.api.internal.file.collections;
 
-import org.gradle.api.NonNullApi;
+

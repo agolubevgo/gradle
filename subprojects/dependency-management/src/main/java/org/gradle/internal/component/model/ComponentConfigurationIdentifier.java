@@ -22,8 +22,8 @@ import org.gradle.api.artifacts.component.ComponentIdentifier;
  * An general identifier for a variant that represents a configuration in a component.
  */
 public class ComponentConfigurationIdentifier implements VariantResolveMetadata.Identifier {
-    private final ComponentIdentifier component;
-    private final String configurationName;
+    public final ComponentIdentifier component;
+    public final String configurationName;
 
     public ComponentConfigurationIdentifier(ComponentIdentifier component, String configurationName) {
         this.component = component;

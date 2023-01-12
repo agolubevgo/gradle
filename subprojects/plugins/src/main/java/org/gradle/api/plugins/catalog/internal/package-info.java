@@ -19,7 +19,6 @@
  *
  * @see org.gradle.api.plugins.catalog.VersionCatalogPlugin
  */
-@NonNullApi
 package org.gradle.api.plugins.catalog.internal;
 
-import org.gradle.api.NonNullApi;
+

@@ -28,7 +28,7 @@ import java.io.File;
 import java.util.Set;
 
 public class DefaultSelfResolvingDependency extends AbstractDependency implements SelfResolvingDependencyInternal, FileCollectionDependency {
-    private final ComponentIdentifier targetComponentId;
+    public final ComponentIdentifier targetComponentId;
     private final FileCollectionInternal source;
 
     public DefaultSelfResolvingDependency(FileCollectionInternal source) {

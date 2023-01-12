@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 
-@NonNullApi
 package org.gradle.internal.locking;
 
-import org.gradle.api.NonNullApi;
+

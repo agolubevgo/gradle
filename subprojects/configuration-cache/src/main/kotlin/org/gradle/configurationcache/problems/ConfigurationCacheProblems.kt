@@ -35,7 +35,6 @@ import java.util.function.Consumer
 
 
 @ServiceScope(Scopes.BuildTree::class)
-internal
 class ConfigurationCacheProblems(
 
     private

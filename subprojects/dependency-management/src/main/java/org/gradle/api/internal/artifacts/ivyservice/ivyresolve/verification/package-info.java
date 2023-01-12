@@ -14,7 +14,4 @@
  * limitations under the License.
  */
 
-@NonNullApi
 package org.gradle.api.internal.artifacts.ivyservice.ivyresolve.verification;
-
-import org.gradle.api.NonNullApi;

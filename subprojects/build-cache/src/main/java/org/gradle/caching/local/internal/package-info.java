@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-@NonNullApi
+
 package org.gradle.caching.local.internal;
 
-import org.gradle.api.NonNullApi;
+

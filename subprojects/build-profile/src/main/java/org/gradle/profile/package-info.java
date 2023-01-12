@@ -14,7 +14,4 @@
  * limitations under the License.
  */
 
-@NonNullApi
 package org.gradle.profile;
-
-import org.gradle.api.NonNullApi;

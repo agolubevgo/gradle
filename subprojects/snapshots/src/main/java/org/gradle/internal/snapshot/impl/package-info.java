@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 
-@NonNullApi
 package org.gradle.internal.snapshot.impl;
 
-import org.gradle.api.NonNullApi;
+

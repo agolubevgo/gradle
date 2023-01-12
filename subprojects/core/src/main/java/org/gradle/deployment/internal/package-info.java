@@ -17,7 +17,6 @@
 /**
  * Internal types for handling deployments.
  */
-@NonNullApi
 package org.gradle.deployment.internal;
 
-import org.gradle.api.NonNullApi;
+

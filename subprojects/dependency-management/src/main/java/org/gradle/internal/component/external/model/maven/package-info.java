@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 
-@NonNullApi
 package org.gradle.internal.component.external.model.maven;
 
-import org.gradle.api.NonNullApi;
+

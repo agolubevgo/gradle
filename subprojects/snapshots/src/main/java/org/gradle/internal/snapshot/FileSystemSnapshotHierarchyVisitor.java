@@ -16,6 +16,9 @@
 
 package org.gradle.internal.snapshot;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
 /**
  * Visitor for {@link FileSystemSnapshot}.
  */

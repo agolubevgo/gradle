@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 
-@NonNullApi
 package org.gradle.internal.resource.transfer;
 
-import org.gradle.api.NonNullApi;
+
